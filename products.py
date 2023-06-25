@@ -1,4 +1,5 @@
 class Product:
+
     def __init__(self, name, price, quantity):
         if not name:
             raise ValueError("Invalid name")
@@ -9,18 +10,18 @@ class Product:
 
         self.name = name
         self.price = price
-        self.quantity = quantity
-        self.active = True
+        self.set_quantity(quantity)
 
 
     def get_quantity(self):
         return self.quantity
 
-
     def set_quantity(self, quantity):
         self.quantity = quantity
         if self.quantity == 0:
             self.deactivate()
+        else:
+            self.activate()
 
 
     def is_active(self):
@@ -30,14 +31,11 @@ class Product:
     def activate(self):
         self.active = True
 
-
     def deactivate(self):
         self.active = False
 
-
     def show(self):
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
-
 
     def buy(self, quantity):
         if quantity <= 0:
@@ -47,9 +45,6 @@ class Product:
             raise Exception("Insufficient quantity")
 
         total_price = self.price * quantity
-        self.quantity -= quantity
-
-        if self.quantity == 0:
-            self.deactivate()
+        self.set_quantity(self.quantity - quantity)
 
         return total_price
