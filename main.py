@@ -48,6 +48,8 @@ def start(store_obj):
                         print("Invalid quantity. Please enter a positive number.")
                     elif quantity > product.get_quantity():
                         print("Please enter a smaller quantity.")
+                    elif product_name == "Shipping" and quantity > 1:
+                        print("Maximum order for that product is 1. Please enter the correct quantity.")
                     else:
                         shopping_list.append((product, quantity))
                 else:
@@ -68,6 +70,8 @@ def main():
         products.Product("MacBook Air M2", price=1450, quantity=100),
         products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
         products.Product("Google Pixel 7", price=500, quantity=250),
+        products.NonStockedProduct("Windows License", price=125),
+        products.LimitedProduct("Shipping", price=10, quantity=250, max_quantity=1)
     ]
 
     best_buy = store.Store(product_list)
