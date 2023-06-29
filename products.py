@@ -10,6 +10,7 @@ class Product:
         self.name = name
         self.price = price
         self.set_quantity(quantity)
+        self.promotion = None
 
     def get_quantity(self):
         return self.quantity
@@ -30,8 +31,12 @@ class Product:
     def deactivate(self):
         self.active = False
 
+    def set_promotion(self, promotion):
+        self.promotion = promotion
+
     def show(self):
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        promotion_info = f"No promotion" if self.promotion is None else f"Promotion: {self.promotion.name}"
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, {promotion_info}"
 
     def buy(self, quantity):
         if quantity <= 0:
@@ -50,8 +55,8 @@ class NonStockedProduct(Product):
     def __init__(self, name, price):
         super().__init__(name, price, quantity=0)
 
-    def show(self):
-        return f"{self.name}, Price: {self.price} (Non Stocked Product)"
+    def set_promotion(self, promotion):
+        raise ValueError("Non-stocked products cannot have promotions.")
 
 
 class LimitedProduct(Product):
@@ -81,5 +86,7 @@ class LimitedProduct(Product):
 non_stocked_product = NonStockedProduct("Windows License", price=125)
 limited_product = LimitedProduct("Shipping", price=10, quantity=250, max_quantity=1)
 
-print(non_stocked_product.show())  # Windows License, Price: 125 (Non Stocked Product)
-print(limited_product.show())  # Shipping, Price: 10, Quantity: 250
+print(non_stocked_product.show())  # Windows License, Price: 125, Quantity: 0, No promotion
+print(limited_product.show())  # Shipping, Price: 10, Quantity: 250, No promotion
+
+
