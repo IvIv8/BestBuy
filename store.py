@@ -1,6 +1,5 @@
 from products import LimitedProduct
 
-
 class Product:
     def __init__(self, name, price, quantity):
         if not name:
@@ -63,8 +62,8 @@ class Store:
 
     def get_total_quantity(self):
         total_quantity = 0
-        for product in self.products:
-            total_quantity += product.get_quantity()
+        for p in self.products:
+            total_quantity += p.get_quantity()
         return total_quantity
 
     def order(self, shopping_list):

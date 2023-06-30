@@ -9,7 +9,8 @@ class Product:
 
         self.name = name
         self.price = price
-        self.set_quantity(quantity)
+        self.quantity = quantity
+        self.active = True
         self.promotion = None
 
     def get_quantity(self):
@@ -19,8 +20,6 @@ class Product:
         self.quantity = quantity
         if self.quantity == 0:
             self.deactivate()
-        else:
-            self.activate()
 
     def is_active(self):
         return self.active
@@ -42,11 +41,17 @@ class Product:
         if quantity <= 0:
             raise ValueError("Invalid quantity")
 
+        if self.name == "Shipping" and quantity > 1:
+            raise ValueError("Maximum order for that product is 1. Please enter the correct quantity")
+
         if quantity > self.quantity:
             raise Exception("Insufficient quantity")
 
         total_price = self.price * quantity
-        self.set_quantity(self.quantity - quantity)
+        self.quantity -= quantity
+
+        if self.quantity == 0:
+            self.deactivate()
 
         return total_price
 
@@ -88,5 +93,4 @@ limited_product = LimitedProduct("Shipping", price=10, quantity=250, max_quantit
 
 print(non_stocked_product.show())  # Windows License, Price: 125, Quantity: 0, No promotion
 print(limited_product.show())  # Shipping, Price: 10, Quantity: 250, No promotion
-
 

@@ -28,13 +28,7 @@ class SecondItemHalfPrice(Promotion):
         discounted_price = (product.price * (quantity // 2)) + (product.price * (quantity % 2))
         return discounted_price
 
-
 class ThirdOneFree(Promotion):
-    def __init__(self, name):
-        super().__init__(name)
-
     def apply_promotion(self, product, quantity):
-        if quantity >= 3:
-            return product.price * (quantity - (quantity // 3))
-        else:
-            return product.price * quantity
+        free_quantity = quantity // 3
+        return (quantity - free_quantity) * product.price
