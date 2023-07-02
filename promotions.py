@@ -20,7 +20,7 @@ class PercentDiscount(Promotion):
         return discounted_price
 
 
-class SecondItemHalfPrice(Promotion):
+class SecondHalfPrice(Promotion):
     def __init__(self, name):
         super().__init__(name)
 

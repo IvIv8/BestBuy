@@ -9,16 +9,14 @@ def start(store_obj):
         print("1. List all products in store")
         print("2. Show total amount in store")
         print("3. Make an order")
-        print("4. Add promotion")
-        print("5. Remove promotion")
-        print("6. Quit")
+        print("4. Quit")
 
         try:
-            choice = int(input("Enter your choice (1-6): "))
+            choice = int(input("Enter your choice (1-4): "))
             if choice < 1 or choice > 4:
                 raise ValueError()
         except ValueError:
-            print("Invalid choice. Please enter a number between 1 and 6.")
+            print("Invalid choice. Please enter a number between 1 and 4.")
             print()
             continue
 
@@ -64,42 +62,6 @@ def start(store_obj):
                 print("No products selected for order.")
             print()
         elif choice == 4:
-            product_name = input("Enter the name of the product to add promotion: ")
-            product = None
-            for p in store_obj.get_all_products():
-                if p.name == product_name:
-                    product = p
-                    break
-            if product is not None:
-                promotion_type = input(
-                    "Enter the type of promotion (e.g., 'percentage', 'second_item', 'buy_2_get_1'): ")
-                if promotion_type == "percentage":
-                    discount_percentage = float(input("Enter the discount percentage: "))
-                    promotion = promotions.PercentageDiscount("Percentage Discount", discount_percentage)
-                elif promotion_type == "second_item":
-                    promotion = promotions.SecondItemHalfPrice("Second Item at Half Price")
-                elif promotion_type == "buy_2_get_1":
-                    promotion = promotions.Buy2Get1Free("Buy 2 Get 1 Free")
-                else:
-                    print("Invalid promotion type.")
-                    continue
-                product.set_promotion(promotion)
-                print("Promotion added successfully.")
-            else:
-                print("Invalid product name.")
-        elif choice == 5:
-            product_name = input("Enter the name of the product to remove promotion: ")
-            product = None
-            for p in store_obj.get_all_products():
-                if p.name == product_name:
-                    product = p
-                    break
-            if product is not None:
-                product.set_promotion(None)
-                print("Promotion removed successfully.")
-            else:
-                print("Invalid product name.")
-        elif choice == 6:
             print("Goodbye!")
             break
 
@@ -113,12 +75,12 @@ def main():
                     ]
 
     # Create promotion catalog
-    second_item_half_price = promotions.SecondItemHalfPrice("Second Item at Half Price")
+    second_half_price = promotions.SecondHalfPrice("Second Half price!")
     third_one_free = promotions.ThirdOneFree("Third One Free!")
     thirty_percent = promotions.PercentDiscount("30% off!", percent=30)
 
     # Add promotions to products
-    product_list[0].set_promotion(second_item_half_price)
+    product_list[0].set_promotion(second_half_price)
     product_list[1].set_promotion(third_one_free)
     product_list[3].set_promotion(thirty_percent)
 
